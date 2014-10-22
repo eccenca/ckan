@@ -38,6 +38,7 @@ RUN ln -s $CKAN_HOME/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 ADD ./contrib/docker/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./contrib/docker/htpasswd $CKAN_CONFIG/htpasswd
 RUN chown www-data:www-data $CKAN_CONFIG/htpasswd
+ADD ./contrib/docker/ckan.ini $CKAN_CONFIG/ckan.ini
 
 # Configure apache
 ADD ./contrib/docker/apache.conf /etc/apache2/sites-available/ckan_default.conf
