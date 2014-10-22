@@ -7,4 +7,13 @@ from paste.deploy import loadapp
 config_filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ckan.ini')
 from paste.script.util.logging_config import fileConfig
 fileConfig(config_filepath)
-application = loadapp('config:%s' % config_filepath)
+
+"""
+" modified according to http://web.archiveorange.com/archive/v/GsJ2s63DY2BPvrQ7y6Ad
+" in order to enable BasicAuth in front of ckan
+"""
+_application = loadapp('config:%s' % config_filepath)
+def application(environ, start_response):
+        environ.pop('REMOTE_USER', None)
+        environ['wsgi.url_scheme'] = environ.get('HTTP_X_SCHEME', 'http')
+        return _application(environ, start_response)
