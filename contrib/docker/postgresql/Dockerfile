@@ -1,4 +1,4 @@
-FROM orchardup/postgresql
+FROM eccenca/docker-postgresql
 
 # Customize default user/pass/db
 ENV POSTGRESQL_USER ckan
