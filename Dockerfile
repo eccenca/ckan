@@ -1,5 +1,5 @@
 # FROM ubuntu:14.04
-FROM phusion/baseimage:0.9.10
+FROM eccenca/baseimage-docker:0.9.15
 
 MAINTAINER Open Knowledge
 
