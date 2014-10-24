@@ -26,7 +26,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
         build-essential \
         libxml2-dev \
         libxslt1-dev \
-        libgeos-c1
+        libgeos-c1 \
+        git
 
 # Install CKAN
 RUN virtualenv $CKAN_HOME
