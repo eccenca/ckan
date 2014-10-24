@@ -23,7 +23,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
         apache2 \
         libapache2-mod-wsgi \
         postfix \
-        build-essential
+        build-essential \
+        libxml2-dev \
+        libxslt1-dev \
+        libgeos-c1
 
 # Install CKAN
 RUN virtualenv $CKAN_HOME
