@@ -43,6 +43,8 @@ ADD ./contrib/docker/apache.wsgi $CKAN_CONFIG/apache.wsgi
 ADD ./contrib/docker/htpasswd $CKAN_CONFIG/htpasswd
 RUN chown www-data:www-data $CKAN_CONFIG/htpasswd
 ADD ./contrib/docker/ckan.ini $CKAN_CONFIG/ckan.ini
+RUN $CKAN_HOME/bin/pip install -e git+https://github.com/eccenca/ckanext-sparql.git#egg=ckanext-sparql
+RUN $CKAN_HOME/bin/pip install -e git+https://github.com/eccenca/ckanext-pages.git#egg=ckanext-pages
 
 # Configure apache
 ADD ./contrib/docker/apache.conf /etc/apache2/sites-available/ckan_default.conf
