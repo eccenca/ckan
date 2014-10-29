@@ -13,13 +13,12 @@ ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
 
 # Install required packages
-RUN apt-get -y update
-RUN \
+RUN apt-get -y update && \
      apt-get -y install python-minimal python-dev python-virtualenv && \
      apt-get -y install libevent-dev libpq-dev nginx-light && \
      apt-get -y install apache2 libapache2-mod-wsgi && \
-     apt-get -y install postfix && \
-     apt-get -y install build-essential
+     apt-get -y install postfix libxml2-dev libxslt1-dev libgeos-c1 && \
+     apt-get -y install build-essential git wget curl 
 
 # Install CKAN
 RUN virtualenv $CKAN_HOME
@@ -45,6 +44,29 @@ RUN mkdir /var/cache/nginx
 
 # Configure postfix
 ADD ./contrib/docker/main.cf /etc/postfix/main.cf
+
+
+#custom
+ADD ./contrib/docker/htpasswd $CKAN_CONFIG/htpasswd
+RUN chown www-data:www-data $CKAN_CONFIG/htpasswd
+ADD ./contrib/docker/ckan.ini $CKAN_CONFIG/ckan.ini
+
+RUN \
+    mkdir -p /var/log/ckan && \
+    touch /var/log/ckan/ckan_ext.log&& \
+    chmod -R 777 /var/log/ckan
+#custom plugins 
+ADD contrib/docker/ckanext-pages $CKAN_HOME/src/ckanext-pages
+RUN $CKAN_HOME/bin/pip install $CKAN_HOME/src/ckanext-pages
+RUN cd $CKAN_HOME/src/ckanext-pages && python setup.py develop
+
+
+ADD contrib/docker/ckanext-sparql $CKAN_HOME/src/ckanext-sparql
+RUN $CKAN_HOME/bin/pip install $CKAN_HOME/src/ckanext-sparql
+RUN cd $CKAN_HOME/src/ckanext-sparql && python setup.py develop
+
+#ADD contrib/docker/ckanext-spatial $CKAN_HOME/src/ckanext-spatial
+#RUN $CKAN_HOME/bin/pip install $CKAN_HOME/src/ckanext-spatial
 
 # Configure runit
 ADD ./contrib/docker/my_init.d /etc/my_init.d
