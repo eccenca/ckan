@@ -1,0 +1,15 @@
+ckan:
+  image: eccenca_ckan:latest
+  volumes: 
+   - $HOME/docker/ckan/var:/var/lib/ckan/
+  links:
+   - solr:solr
+   - postgresql:db
+  ports:
+   - "80:80"
+
+solr:   
+ - image: eccenca_solr:latest
+
+postgresql:
+ - image: eccenca_postgresql:latest

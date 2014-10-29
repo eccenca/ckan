@@ -1,4 +1,3 @@
-# FROM ubuntu:14.04
 FROM phusion/baseimage:0.9.10
 
 MAINTAINER Open Knowledge
@@ -6,24 +5,21 @@ MAINTAINER Open Knowledge
 # Disable SSH
 RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
+ENV DEBIAN_FRONTEND noninteractive 
+
 ENV HOME /root
 ENV CKAN_HOME /usr/lib/ckan/default
 ENV CKAN_CONFIG /etc/ckan/default
 ENV CKAN_DATA /var/lib/ckan
 
 # Install required packages
-RUN apt-get -q -y update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -q -y install \
-        python-minimal \
-        python-dev \
-        python-virtualenv \
-        libevent-dev \
-        libpq-dev \
-        nginx-light \
-        apache2 \
-        libapache2-mod-wsgi \
-        postfix \
-        build-essential
+RUN apt-get -y update
+RUN \
+     apt-get -y install python-minimal python-dev python-virtualenv && \
+     apt-get -y install libevent-dev libpq-dev nginx-light && \
+     apt-get -y install apache2 libapache2-mod-wsgi && \
+     apt-get -y install postfix && \
+     apt-get -y install build-essential
 
 # Install CKAN
 RUN virtualenv $CKAN_HOME
