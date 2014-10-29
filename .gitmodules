@@ -1,0 +1,9 @@
+[submodule "contrib/docker/ckanext-spatial"]
+	path = contrib/docker/ckanext-spatial
+	url = git@github.com:eccenca/ckanext-spatial.git
+[submodule "contrib/docker/ckanext-pages"]
+	path = contrib/docker/ckanext-pages
+	url = git@github.com:eccenca/ckanext-pages.git
+[submodule "contrib/docker/ckanext-sparql"]
+	path = contrib/docker/ckanext-sparql
+	url = git@github.com:eccenca/ckanext-sparql.git
