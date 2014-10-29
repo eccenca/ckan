@@ -40,3 +40,8 @@ ckan_deb/DEBIAN/prerm
 
 # node.js
 node_modules/
+
+
+contrib/docker/ckanext-pages/
+contrib/docker/ckanext-sparql/
+contrib/docker/ckanext-spatial/
