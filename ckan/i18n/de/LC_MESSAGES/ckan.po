@@ -6320,3 +6320,11 @@ msgstr "Wähle eine Datensatz-Eigenschaft und finde heraus, welche Kategorien in
 #: ckanext/stats/templates_legacy/ckanext/stats/leaderboard.html:20
 msgid "Choose area"
 msgstr "Wähle Bereich"
+
+#: ckanext/pages/templates_main/ckanext-pages/base-form.html:54
+msgid "Menu Order"
+msgstr "Menureihenfolge"
+
+#: ckanext/pages/templates_main/ckanext-pages/base-form.html:78
+msgid "Content"
+msgstr "Inhalt"
