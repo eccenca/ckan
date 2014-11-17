@@ -115,14 +115,14 @@ this.ckan.module('reclinepreview', function (jQuery, _) {
           view: new recline.View.Graph({
             model: dataset
           })
-        },
+      }/*,
         {
           id: 'map',
           label: 'Map',
           view: new recline.View.Map({
             model: dataset
           })
-        }
+      }*/
       ];
 
       var sidebarViews = [
