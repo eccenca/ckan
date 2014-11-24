@@ -3,4 +3,4 @@
 	url = https://github.com/okfn/sphinx-theme-okfn.git
 [submodule "ckan/i18n"]
 	path = ckan/i18n
-	url = git@github.com:eccenca/ckan-internationalize.git
+	url = https://github.com/eccenca/ckan-internationalize.git
