@@ -97,7 +97,10 @@ def redirect_to(*args, **kw):
     kw['__ckan_no_root'] = True
     if are_there_flash_messages():
         kw['__no_cache__'] = True
-    return _redirect_to(url_for(*args, **kw))
+
+    url = url_for(*args, **kw)
+    log.debug('redirect_to url: %s', url)
+    return _redirect_to(url)
 
 
 def url(*args, **kw):
@@ -167,6 +170,8 @@ def _add_i18n_to_url(url_to_amend, **kw):
     # (as part of the language changing feature).
     # A locale of default will not add locale info to the url.
 
+    log.debug('url_to_amend: %s', url_to_amend)
+
     default_locale = False
     locale = kw.pop('locale', None)
     no_root = kw.pop('__ckan_no_root', False)
@@ -209,22 +214,30 @@ def _add_i18n_to_url(url_to_amend, **kw):
     else:
         if default_locale:
             url = url_to_amend
+            log.debug('url: %s', url)
         else:
             # we need to strip the root from the url and the add it before
             # the language specification.
             url = url_to_amend[len(root):]
+            log.debug('url: %s', url)
+            log.debug('root: %s locale: % url: %s', root, locale, url)
             url = '%s/%s%s' % (root, locale, url)
 
     # stop the root being added twice in redirects
     if no_root:
         url = url_to_amend[len(root):]
+        log.debug('url: %s', url)
         if not default_locale:
             url = '/%s%s' % (locale, url)
+            log.debug('locale: % url: %s', locale, url)
 
     if url == '/packages':
         error = 'There is a broken url being created %s' % kw
         raise ckan.exceptions.CkanUrlException(error)
-
+    
+    ckan_site_url = config.get('ckan.site_url', '')
+    if ckan_site_url.lower().startswith('https'):
+        url = url.replace('http://', 'https://', 1)
     return url
 
 
