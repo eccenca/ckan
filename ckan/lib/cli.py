@@ -489,7 +489,7 @@ Default is false.'''
 
         ### Get ids using own engine, otherwise multiprocess will balk
         db_url = conf['sqlalchemy.url']
-        engine = sa.create_engine(db_url)
+        engine = sa.create_engine(db_url, pool_size=5, pool_recycle=10, pool_timeout=5)
         package_ids = []
         result = engine.execute("select id from package where state = 'active';")
         for row in result:

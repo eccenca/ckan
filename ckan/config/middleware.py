@@ -341,7 +341,7 @@ class TrackingMiddleware(object):
 
     def __init__(self, app, config):
         self.app = app
-        self.engine = sa.create_engine(config.get('sqlalchemy.url'))
+        self.engine = sa.create_engine(config.get('sqlalchemy.url'), pool_size=5, pool_recycle=10, pool_timeout=5)
 
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO']
