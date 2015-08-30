@@ -55,19 +55,14 @@
         {% endif %}
 
         {% block extras scoped %}
-          {% for extra in h.sorted_extras(pkg_dict.extras, exclude=['spatial']) %}
+          {% for extra in h.sorted_extras(pkg_dict.extras, exclude=['spatial', 'coupled-resource']) %}
             {% set key, value = extra %}
               {% if key == "responsible-party" %}
                 <tr rel="dc:relation" resource="_:extra{{ i }}">
                   <th scope="row" class="dataset-label" property="rdfs:label">{{ _(key) }}</th>
                   <td class="dataset-details" property="rdf:value">
-                      <!-- "Role": role,
-                      "Name": individualName,
-                      "Organisation": organizationName,
-                      "Position": positionName,
-                      "E-mail address": email -->
                       {% for responsible_party in h.parse_json(value) %}
-                        <table class="table-bordered">
+                        <table class="table table-striped table-bordered table-condensed">
                           {% for key, value in responsible_party.iteritems() %}
                             <tr>
                               <td><b>{{key}}</b></td>
