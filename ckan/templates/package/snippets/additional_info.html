@@ -58,15 +58,38 @@
           </tr>
         {% endif %}
 
-      {% block extras scoped %}
-        {% for extra in h.sorted_extras(pkg_dict.extras) %}
-          {% set key, value = extra %}
-          <tr rel="dc:relation" resource="_:extra{{ i }}">
-            <th scope="row" class="dataset-label" property="rdfs:label">{{ _(key) }}</th>
-            <td class="dataset-details" property="rdf:value">{{ value }}</td>
-          </tr>
-        {% endfor %}
-      {% endblock %}
+        {% block extras scoped %}
+          {% for extra in h.sorted_extras(pkg_dict.extras, exclude=['spatial']) %}
+            {% set key, value = extra %}
+              {% if key == "responsible-party" %}
+                <tr rel="dc:relation" resource="_:extra{{ i }}">
+                  <th scope="row" class="dataset-label" property="rdfs:label">{{ _(key) }}</th>
+                  <td class="dataset-details" property="rdf:value">
+                      <!-- "Role": role,
+                      "Name": individualName,
+                      "Organisation": organizationName,
+                      "Position": positionName,
+                      "E-mail address": email -->
+                      {% for responsible_party in h.parse_json(value) %}
+                        <table class="table-bordered">
+                          {% for key, value in responsible_party.iteritems() %}
+                            <tr>
+                              <td><b>{{key}}</b></td>
+                              <td>{{value}}</td>
+                            </tr>
+                          {% endfor %}
+                        </table>
+                      {% endfor %}
+                  </td>
+                </tr>
+              {% else %}
+                <tr rel="dc:relation" resource="_:extra{{ i }}">
+                  <th scope="row" class="dataset-label" property="rdfs:label">{{ _(key) }}</th>
+                  <td class="dataset-details" property="rdf:value">{{ _(value) }}</td>
+                </tr>
+              {% endif %}
+          {% endfor %}
+        {% endblock %}
 
       {% endblock %}
     </tbody>
