@@ -1803,6 +1803,11 @@ def get_organization(org=None, include_datasets=False):
     except (NotFound, ValidationError, NotAuthorized):
         return {}
 
+def parse_json(json_string):
+    import json
+    parsed_json = json.loads(json_string)
+    return parsed_json
+
 # these are the functions that will end up in `h` template helpers
 __allowed_functions__ = [
     # functions defined in ckan.lib.helpers
@@ -1907,4 +1912,5 @@ __allowed_functions__ = [
     'get_featured_groups',
     'get_site_statistics',
     'check_config_permission',
+    'parse_json',
 ]
