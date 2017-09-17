@@ -561,6 +561,7 @@ class PackageController(base.BaseController):
                        'user': c.user or c.author, 'auth_user_obj': c.userobj}
 
             data['package_id'] = id
+            data['immutable'] = "checked" if 'immutable' in data else ""
             try:
                 if resource_id:
                     data['id'] = resource_id

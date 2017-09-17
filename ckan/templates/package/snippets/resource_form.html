@@ -38,6 +38,11 @@
       {% endcall %}
     {% endblock %}
 
+    {% block csw_harvester_fields_immutable %}
+      {% call form.checkbox_resource_edit('immutable', id='immutable-checkbox', label=_('Immutable'), placeholder=_('Define resource as immutable for CSW harvester'), value=data.immutable, error=errors.immutable) %}
+      {% endcall %}
+    {% endblock %}
+
 
   {% block metadata_fields %}
     {% if include_metadata %}
